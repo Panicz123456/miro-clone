@@ -17,7 +17,9 @@ interface iAppProps {
 }
 
 export const BoardList = ({ orgId, query }: iAppProps) => {
-  const data = useQuery(api.borders.get, { orgId });
+  const data = useQuery(api.borders.get, { orgId,
+    ...query
+   });
 
   if (data === undefined) {
     return (
@@ -64,7 +66,7 @@ export const BoardList = ({ orgId, query }: iAppProps) => {
             authorName={board.authorName}
             createdAt={board._creationTime}
             orgId={board.orgId}
-            isFavourite={board.isFavorite}
+            isFavourite={board.isFavourite}
           />
         ))}
       </div>

@@ -36,9 +36,6 @@ export function BoardCard({
   orgId,
   isFavourite,
 }: BoardCardProps) {
-const handleFavorite = useMutation(api.board.favourite)
-const handleUnFavorite = useMutation(api.board.unfavourite)
-
   const { mutate: favourite, pending: isFavouriting } = useApiMutation(
     api.board.favourite
   );
@@ -54,11 +51,11 @@ const handleUnFavorite = useMutation(api.board.unfavourite)
 
   const toggleFavourite = () => {
     if (isFavourite) {
-      handleUnFavorite({ id: id as Id<"boards"> }).catch(() =>
+      unfavourite({ id: id as Id<"boards"> }).catch(() =>
         toast.error("Failed to unfavourite board")
       );
     } else {
-      handleFavorite({ id: id as Id<"boards">, orgId }).catch(() =>
+      favourite({ id: id as Id<"boards">, orgId }).catch(() =>
         toast.error("Failed to favourite board")
       );
     }

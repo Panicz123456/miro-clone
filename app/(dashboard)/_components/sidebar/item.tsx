@@ -27,18 +27,16 @@ export function Item({ id, imageUrl, name }: ItemProps) {
 
   return (
     <div className="aspect-square relative">
-      <Hint label={name} side="right" align="start" sideOffset={18}>
-        <Image
-          src={imageUrl}
-          onClick={onClick}
-          alt={name}
-          fill
-          className={cn(
-            "rounded-md cursor-pointer opacity-75 hover:opacity-100 transition",
-            isActive && "opacity-100"
-          )}
-        />
-      </Hint>
+      <Image
+        src={imageUrl}
+        onClick={onClick}
+        alt={name}
+        fill
+        className={cn(
+          "rounded-md cursor-pointer opacity-75 hover:opacity-100 transition",
+          isActive && "opacity-100"
+        )}
+      />
     </div>
   );
 }

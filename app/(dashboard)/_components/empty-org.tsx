@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { CreateOrganization } from "@clerk/nextjs";
 import Image from "next/image";
 
-export const EmptyOrg = () => {
+export function EmptyOrg() {
   return (
     <div className="h-full flex flex-col items-center justify-center">
       <Image src="/elements.svg" alt="Empty" height={200} width={200} />
@@ -23,4 +23,4 @@ export const EmptyOrg = () => {
       </div>
     </div>
   );
-};
+}

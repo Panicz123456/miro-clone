@@ -6,9 +6,9 @@ interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
-const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <main className="h-full">
+    <main className="h-full ">
       <Sidebar />
       <div className="pl-[60px] h-full">
         <div className="flex gap-x-3 h-full">
@@ -21,6 +21,4 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       </div>
     </main>
   );
-};
-
-export default DashboardLayout;
+}

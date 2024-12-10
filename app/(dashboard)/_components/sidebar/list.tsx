@@ -14,13 +14,13 @@ export function List() {
 
   return (
     <ul className="space-y-4">
-      {userMemberships.data?.map((mem) => {
+      {userMemberships.data?.map((membership) => {
         return (
           <Item
-            id={mem.organization.id}
-            key={mem.organization.id}
-            imageUrl={mem.organization.imageUrl}
-            name={mem.organization.name}
+            id={membership.organization.id}
+            key={membership.organization.id}
+            imageUrl={membership.organization.imageUrl}
+            name={membership.organization.name}
           />
         );
       })}

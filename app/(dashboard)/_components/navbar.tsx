@@ -5,10 +5,10 @@ import {
   UserButton,
   useOrganization,
 } from "@clerk/nextjs";
-import { SearchInput } from "./search-input";
 import { InviteButton } from "./invite-button";
+import { SearchInput } from "./search-input";
 
-export const Navbar = () => {
+export function Navbar() {
   const { organization } = useOrganization();
 
   return (
@@ -44,4 +44,4 @@ export const Navbar = () => {
       <UserButton />
     </div>
   );
-};
+}

@@ -11,19 +11,18 @@ import { useRouter } from "next/navigation";
 export function EmptyBoards() {
   const router = useRouter();
   const { organization } = useOrganization();
-  const { mutate, pending } = useApiMutation(api.board.create);
+  const { mutate: create, pending } = useApiMutation(api.board.create);
 
   const handleClick = () => {
     if (!organization) return;
 
-    mutate({
-      orgId: organization?.id!,
+    create({
       title: "Untitled",
+      orgId: organization.id,
     })
       .then((id) => {
         toast.success("Board created");
-        // TODO: UNCOMMENT THIS TO ROUTER WORK AFTER ADDING /board/id
-        // router.push(`/board/${id}`);
+        router.push(`/board/${id}`);
       })
       .catch(() => {
         toast.error("Failed to create board");
@@ -38,7 +37,7 @@ export function EmptyBoards() {
         Start by creating a board for your organization
       </p>
       <div className="mt-6">
-        <Button disabled={pending} onClick={handleClick} size="lg">
+        <Button size="lg" onClick={handleClick} disabled={pending}>
           Create board
         </Button>
       </div>
