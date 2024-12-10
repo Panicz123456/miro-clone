@@ -1,12 +1,12 @@
 "use client";
 
-import { BoardCart } from "./board-cart";
 import { EmptyBoards } from "./empty-board";
 import { EmptyFavourites } from "./empty-favorites";
 import { EmptySearch } from "./empty-search";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { NewBoardButton } from "./new-board-button";
+import { BoardCard } from "./board-cart";
 
 interface iAppProps {
   orgId: string;
@@ -27,10 +27,10 @@ export const BoardList = ({ orgId, query }: iAppProps) => {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5 mt-8 pb-10">
           <NewBoardButton orgId={orgId} disabled />
-          <BoardCart.Skeleton />
-          <BoardCart.Skeleton />
-          <BoardCart.Skeleton />
-          <BoardCart.Skeleton />
+          <BoardCard.Skeleton />
+          <BoardCard.Skeleton />
+          <BoardCard.Skeleton />
+          <BoardCard.Skeleton />
         </div>
       </div>
     );
@@ -55,7 +55,7 @@ export const BoardList = ({ orgId, query }: iAppProps) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5 mt-8 pb-10">
         <NewBoardButton orgId={orgId} />
         {data?.map((board) => (
-          <BoardCart
+          <BoardCard
             key={board._id}
             id={board._id}
             title={board.title}
@@ -64,7 +64,7 @@ export const BoardList = ({ orgId, query }: iAppProps) => {
             authorName={board.authorName}
             createdAt={board._creationTime}
             orgId={board.orgId}
-            isFavorite={false}
+            isFavourite={board.isFavorite}
           />
         ))}
       </div>

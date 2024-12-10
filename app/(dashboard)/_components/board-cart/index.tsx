@@ -1,18 +1,21 @@
 "use client";
 
+import { Actions } from "@/components/actions";
+import { Skeleton } from "@/components/ui/skeleton";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
+import { useApiMutation } from "@/hooks/useApiMutation";
+import { useAuth } from "@clerk/nextjs";
+import { formatDistanceToNow } from "date-fns";
+import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { formatDistanceToNow } from "date-fns";
-import { useAuth } from "@clerk/nextjs";
-
-import { Overlay } from "./overlay";
+import { toast } from "sonner";
 import { Footer } from "./footer";
+import { Overlay } from "./overlay";
+import { useMutation } from "convex/react";
 
-import { Skeleton } from "@/components/ui/skeleton";
-import { Actions } from "@/components/actions";
-import { MoreHorizontal } from "lucide-react";
-
-interface iAppProps {
+interface BoardCardProps {
   id: string;
   title: string;
   imageUrl: string;
@@ -20,24 +23,46 @@ interface iAppProps {
   authorName: string;
   createdAt: number;
   orgId: string;
-  isFavorite: boolean;
+  isFavourite: boolean;
 }
 
-export const BoardCart = ({
+export function BoardCard({
+  id,
+  title,
+  imageUrl,
   authorId,
   authorName,
   createdAt,
-  id,
-  imageUrl,
-  isFavorite,
   orgId,
-  title,
-}: iAppProps) => {
+  isFavourite,
+}: BoardCardProps) {
+const handleFavorite = useMutation(api.board.favourite)
+const handleUnFavorite = useMutation(api.board.unfavourite)
+
+  const { mutate: favourite, pending: isFavouriting } = useApiMutation(
+    api.board.favourite
+  );
+  const { mutate: unfavourite, pending: isUnfavouriting } = useApiMutation(
+    api.board.unfavourite
+  );
+
   const { userId } = useAuth();
   const authorLabel = userId === authorId ? "You" : authorName;
   const createdAtLabel = formatDistanceToNow(createdAt, {
     addSuffix: true,
   });
+
+  const toggleFavourite = () => {
+    if (isFavourite) {
+      handleUnFavorite({ id: id as Id<"boards"> }).catch(() =>
+        toast.error("Failed to unfavourite board")
+      );
+    } else {
+      handleFavorite({ id: id as Id<"boards">, orgId }).catch(() =>
+        toast.error("Failed to favourite board")
+      );
+    }
+  };
 
   return (
     <Link href={`/boards/${id}`}>
@@ -52,19 +77,19 @@ export const BoardCart = ({
           </Actions>
         </div>
         <Footer
-          isFavourite={isFavorite}
+          isFavourite={isFavourite}
           title={title}
           authorLabel={authorLabel}
           createdAtLabel={createdAtLabel}
-          onClick={() => {}}
-          disabled={isFavorite}
+          onClick={toggleFavourite}
+          disabled={isFavouriting || isUnfavouriting}
         />
       </div>
     </Link>
   );
-};
+}
 
-BoardCart.Skeleton = function BoardCardSkeleton() {
+BoardCard.Skeleton = function BoardCardSkeleton() {
   return (
     <div className="aspect-[100/127] rounded-lg overflow-hidden">
       <Skeleton className="h-full w-full" />
