@@ -1,12 +1,12 @@
 export type Color = {
-  r: Number;
-  g: Number;
-  b: Number;
+  r: number;
+  g: number;
+  b: number;
 };
 
 export type Camera = {
-  x: Number;
-  y: Number;
+  x: number;
+  y: number;
 };
 
 export enum LayerType {
@@ -120,7 +120,6 @@ export type CanvasState =
   | {
       mode: CanvasMode.Pencil;
     };
-
 
 export enum CanvasMode {
   None,
